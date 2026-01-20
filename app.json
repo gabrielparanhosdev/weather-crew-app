@@ -43,6 +43,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "3fea64db-b3c1-4826-b730-0ea37fb39c5f"
+      }
+    },
+    "owner": "weather-crew"
   }
 }
