@@ -1,5 +1,5 @@
 import { Image } from 'expo-image';
-import { Platform, StyleSheet, TouchableOpacity } from 'react-native';
+import { Platform, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
@@ -7,12 +7,31 @@ import { HelloWave } from '@/components/hello-wave';
 import ParallaxScrollView from '@/components/parallax-scroll-view';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
+import { useAuth } from '../contexts/AuthContext';
 import type { RootStackParamList } from '../navigation/types';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 export default function HomeScreen() {
   const navigation = useNavigation<NavigationProp>();
+  const { user, logout } = useAuth();
+
+  const handleLogout = () => {
+    Alert.alert('Sair', 'Tem certeza que deseja sair?', [
+      { text: 'Cancelar', style: 'cancel' },
+      {
+        text: 'Sair',
+        style: 'destructive',
+        onPress: async () => {
+          try {
+            await logout();
+          } catch (error) {
+            Alert.alert('Erro', 'Não foi possível fazer logout');
+          }
+        },
+      },
+    ]);
+  };
 
   return (
     <ParallaxScrollView
@@ -27,6 +46,14 @@ export default function HomeScreen() {
         <ThemedText type="title">Welcome!</ThemedText>
         <HelloWave />
       </ThemedView>
+      {user && (
+        <ThemedView style={styles.userContainer}>
+          <ThemedText>Olá, {user.name || user.email}!</ThemedText>
+          <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
+            <ThemedText style={styles.logoutText}>Sair</ThemedText>
+          </TouchableOpacity>
+        </ThemedView>
+      )}
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>
         <ThemedText>
@@ -70,6 +97,25 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
+  },
+  userContainer: {
+    marginBottom: 16,
+    padding: 16,
+    borderRadius: 8,
+    backgroundColor: 'rgba(10, 126, 164, 0.1)',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  logoutButton: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    backgroundColor: '#ff3b30',
+    borderRadius: 6,
+  },
+  logoutText: {
+    color: '#fff',
+    fontWeight: '600',
   },
   stepContainer: {
     gap: 8,
