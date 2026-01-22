@@ -1,16 +1,22 @@
-import { Link } from 'expo-router';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
+import type { RootStackParamList } from '../navigation/types';
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 export default function ModalScreen() {
+  const navigation = useNavigation<NavigationProp>();
+
   return (
     <ThemedView style={styles.container}>
       <ThemedText type="title">This is a modal</ThemedText>
-      <Link href="/" dismissTo style={styles.link}>
+      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.link}>
         <ThemedText type="link">Go to home screen</ThemedText>
-      </Link>
+      </TouchableOpacity>
     </ThemedView>
   );
 }

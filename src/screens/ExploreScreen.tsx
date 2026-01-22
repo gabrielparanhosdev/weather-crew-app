@@ -9,7 +9,7 @@ import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Fonts } from '@/constants/theme';
 
-export default function TabTwoScreen() {
+export default function ExploreScreen() {
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
@@ -31,17 +31,14 @@ export default function TabTwoScreen() {
         </ThemedText>
       </ThemedView>
       <ThemedText>This app includes example code to help you get started.</ThemedText>
-      <Collapsible title="File-based routing">
+      <Collapsible title="React Navigation">
         <ThemedText>
-          This app has two screens:{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
+          This app uses React Navigation with Bottom Tabs and Stack Navigator.
         </ThemedText>
         <ThemedText>
-          The layout file in <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{' '}
-          sets up the tab navigator.
+          The navigation is configured in <ThemedText type="defaultSemiBold">src/navigation/AppNavigator.tsx</ThemedText>
         </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
+        <ExternalLink href="https://reactnavigation.org/docs/getting-started">
           <ThemedText type="link">Learn more</ThemedText>
         </ExternalLink>
       </Collapsible>
